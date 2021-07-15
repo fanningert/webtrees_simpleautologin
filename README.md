@@ -1,18 +1,18 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 # Simple Auto Login for Webtrees
-This module provides a simple way for a SSO auto login in combination with a authentication proxy (like [https://github.com/oauth2-proxy/oauth2-proxy](oauth2-proxy)).
+This module provides a simple way to add a SSO auto login for webtrees in combination with a authentication proxy  (like [oauth2-proxy](https://github.com/oauth2-proxy/oauth2-proxy)).
 
 ## oauth2-proxy
 
 In my installation I have Caddy a first line reverse proxy. 
 
-``
+```
 [CADDY](https://caddyserver.com/) -> [https://github.com/oauth2-proxy/oauth2-proxy](oauth2-proxy) -> webtrees
              |
              v
            Keycloak
-``
+```
 
 ### CADDY configuration
 ```yaml
