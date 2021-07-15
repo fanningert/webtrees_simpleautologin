@@ -5,22 +5,18 @@ This module provides a simple way to add a SSO auto login for webtrees in combin
 
 ## oauth2-proxy
 
-In my installation I have Caddy a first line reverse proxy. 
+In my installation, I have [Caddy](https://caddyserver.com/) as a first line reverse proxy. Behind this is a authentication proxy ([oauth2-proxy](https://github.com/oauth2-proxy/oauth2-proxy)) for the oauth authentication with [keycloak](https://www.keycloak.org/).
 
 ```
-CADDY -> oauth2-proxy -> webtrees
+caddy -> oauth2-proxy -> webtrees
              |
              v
-           Keycloak
+          Keycloak
 ```
 
-### CADDY configuration
+### caddy configuration
 ```yaml
 webtrees.example.com {
-  import webconf
-  import hideserver
-  import securityheader
-
   reverse_proxy <oauth-proxy: https://x.x.x.x:port> {
     transport http {
       tls_insecure_skip_verify
