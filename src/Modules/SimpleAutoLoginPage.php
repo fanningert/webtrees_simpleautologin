@@ -46,12 +46,18 @@ class SimpleAutoLoginPage extends LoginPage
 		
 		$server_params = (array) $request->getServerParams();
 		
-		if (array_key_exists('REMOTE_USER', $server_params) && $server_params['REMOTE_USER'] !== '') {
-			$username = $server_params['REMOTE_USER'];
-		}elseif (array_key_exists('HTTP_X_FORWARDED_PREFERRED_USERNAME', $server_params) && $server_params['HTTP_X_FORWARDED_PREFERRED_USERNAME'] !== '') {
-			$username = $server_params['HTTP_X_FORWARDED_PREFERRED_USERNAME'];	
-		}
+		// oauth2-proxy: HTTP_X_FORWARDED_PREFERRED_USERNAME = USERNAME
+		// Apache mod_ssl: SSL_CLIENT_S_DN_CN = USERNAME
+	    // general: REMOTE_USER = USERNAME
 		
+	    if (array_key_exists('HTTP_X_FORWARDED_PREFERRED_USERNAME', $server_params) && $server_params['HTTP_X_FORWARDED_PREFERRED_USERNAME'] !== '') {
+	        $username = $server_params['REMOTE_USER'];
+		}elseif (array_key_exists('SSL_CLIENT_S_DN_CN', $server_params) && $server_params['SSL_CLIENT_S_DN_CN'] !== '') {
+			$username = $server_params['SSL_CLIENT_S_DN_CN'];	
+		}elseif (array_key_exists('REMOTE_USER', $server_params) && $server_params['REMOTE_USER'] !== '') {
+			$username = $server_params['REMOTE_USER'];
+		}
+
 		if ($username !== '') {  
 			$user = $this->user_service->findByIdentifier($username);
 		}
