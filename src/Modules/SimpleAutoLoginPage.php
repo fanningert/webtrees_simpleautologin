@@ -44,8 +44,6 @@ class SimpleAutoLoginPage extends LoginPage
         $params = (array) $request->getParsedBody();
 		$url = array_key_exists('url', $params) ? $params['url'] : route(HomePage::class);
 		
-		$server_params = (array) $request->getServerParams();
-		
 		// Need to set the trusted server parameter in the config.ini.pph of webtrees
 		// EXAMPLE: trusted_header_authenticated_user="REMOTE_USER"
 		// oauth2-proxy: HTTP_X_FORWARDED_PREFERRED_USERNAME = USERNAME
@@ -53,15 +51,18 @@ class SimpleAutoLoginPage extends LoginPage
 	    // general: REMOTE_USER = USERNAME
 		
 		$trusted_header = $request->getAttribute('trusted_header_authenticated_user');
-		if ($trusted_header !== '') {
-		  $username = $request->getServerParams($trusted_header);
+		if (isset($trusted_header) && $trusted_header !== null && $trusted_header !== '') {
+			$server_params = (array) $request->getServerParams($trusted_header);
+			if (array_key_exists($trusted_header, $server_params)) {
+				$username = $server_params[$trusted_header];
+			}
 		}
 
-		if ($username !== '') {  
+		if (isset($username) && $username !== null && $username !== '') {  
 			$user = $this->user_service->findByIdentifier($username);
 		}
 		
-		if ($user !== null && $user !== '') {  
+		if (isset($user) && $user !== null && $user !== '') {  
 			try {
 		        if ($user->getPreference(UserInterface::PREF_IS_EMAIL_VERIFIED) !== '1') {
 		            Log::addAuthenticationLog('Login failed (not verified by user): ' . $username);
@@ -97,3 +98,4 @@ class SimpleAutoLoginPage extends LoginPage
 		}
 	}
 }
+
