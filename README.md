@@ -86,10 +86,13 @@ To manually install the module, perform the following steps:
 1. Scroll to the bottom.
 1. Click the "save" button.
 1. Add ``trusted_header_authenticated_user`` to the ``config.ini.php`` of webtrees
-  * oauth2-proxy: HTTP_X_FORWARDED_PREFERRED_USERNAME
-  * Apache mod_ssl: SSL_CLIENT_S_DN_CN
-  * general: REMOTE_USER
-  Example: trusted_header_authenticated_user="REMOTE_USER";
+ 
+Known server parameter:
+* oauth2-proxy: HTTP_X_FORWARDED_PREFERRED_USERNAME
+* Apache mod_ssl: SSL_CLIENT_S_DN_CN
+* general: REMOTE_USER
+  
+**Example:** trusted_header_authenticated_user="REMOTE_USER";
 
 ## Disable
 1. Visit the Control Panel
