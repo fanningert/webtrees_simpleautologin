@@ -3,6 +3,56 @@
 # Simple Auto Login for Webtrees
 This module provides a simple way to add a SSO auto login for webtrees in combination with a authentication proxy  (like [oauth2-proxy](https://github.com/oauth2-proxy/oauth2-proxy)).
 
+## Installation
+Requires webtrees 2.0.
+
+### Using Git
+If you are using ``git``, you could also clone the current main branch directly into your ``modules_v4`` directory 
+by calling:
+
+```
+git clone https://github.com/fanningert/webtrees_simpleautologin.git modules_v4/webtrees_simpleautologin
+```
+
+### Manual installation
+To manually install the module, perform the following steps:
+
+1. Download the [latest release](https://github.com/fanningert/webtrees_simpleautologin/releases/latest).
+1. Upload the downloaded file to your web server.
+1. Unzip the package into your ``modules_v4`` directory.
+1. Rename the folder to ``webtrees_simpleautologin``
+
+## Enable
+1. Visit the Control Panel
+1. Click "All modules"
+1. Scroll to "Simple Auto Login"
+1. Clear the checkbox for this module.
+1. Scroll to the bottom.
+1. Click the "save" button.
+1. Add ``trusted_header_authenticated_user`` to the ``config.ini.php`` of webtrees
+ 
+Known server parameter:
+* oauth2-proxy: HTTP_X_FORWARDED_PREFERRED_USERNAME
+* Apache mod_ssl: SSL_CLIENT_S_DN_CN
+* general: REMOTE_USER
+  
+**Example:** trusted_header_authenticated_user="REMOTE_USER";
+
+## Disable
+1. Visit the Control Panel
+1. Click "All modules"
+1. Scroll to "Simple Auto Login"
+1. Clear the checkbox for this module.
+1. Scroll to the bottom.
+1. Click the "save" button.
+
+Alternatively, you can unload the module by renaming ``modules_v4/webtrees_simpleautologin/`` to ``modules_v4/webtrees_simpleautologin.disable/``
+
+## Uninstall
+It is safe to delete the ``webtrees_simpleautologin`` directory at any time.
+
+# Landscape examples
+
 ## oauth2-proxy
 
 In my installation, I have [Caddy](https://caddyserver.com/) as a first line reverse proxy. Behind this is a authentication proxy ([oauth2-proxy](https://github.com/oauth2-proxy/oauth2-proxy)) for the oauth authentication with [keycloak](https://www.keycloak.org/).
@@ -57,52 +107,3 @@ podman create --name "oauthproxy_core" --pod "oauthproxy" \
 More information can be find [here](https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/oauth_provider#keycloak-auth-provider).
 
 ### Keycloak configuration
-
-
-## Installation
-Requires webtrees 2.0.
-
-### Using Git
-If you are using ``git``, you could also clone the current main branch directly into your ``modules_v4`` directory 
-by calling:
-
-```
-git clone https://github.com/fanningert/webtrees_simpleautologin.git modules_v4/webtrees_simpleautologin
-```
-
-### Manual installation
-To manually install the module, perform the following steps:
-
-1. Download the [latest release](https://github.com/fanningert/webtrees_simpleautologin/releases/latest).
-1. Upload the downloaded file to your web server.
-1. Unzip the package into your ``modules_v4`` directory.
-1. Rename the folder to ``webtrees_simpleautologin``
-
-## Enable
-1. Visit the Control Panel
-1. Click "All modules"
-1. Scroll to "Simple Auto Login"
-1. Clear the checkbox for this module.
-1. Scroll to the bottom.
-1. Click the "save" button.
-1. Add ``trusted_header_authenticated_user`` to the ``config.ini.php`` of webtrees
- 
-Known server parameter:
-* oauth2-proxy: HTTP_X_FORWARDED_PREFERRED_USERNAME
-* Apache mod_ssl: SSL_CLIENT_S_DN_CN
-* general: REMOTE_USER
-  
-**Example:** trusted_header_authenticated_user="REMOTE_USER";
-
-## Disable
-1. Visit the Control Panel
-1. Click "All modules"
-1. Scroll to "Simple Auto Login"
-1. Clear the checkbox for this module.
-1. Scroll to the bottom.
-1. Click the "save" button.
-
-Alternatively, you can unload the module by renaming ``modules_v4/webtrees_simpleautologin/`` to ``modules_v4/webtrees_simpleautologin.disable/``
-
-## Uninstall
-It is safe to delete the ``webtrees_simpleautologin`` directory at any time.
