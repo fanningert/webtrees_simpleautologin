@@ -11,6 +11,7 @@ use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
 use Fisharebest\Webtrees\Module\ModuleCustomTrait;
 use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
+use Fisharebest\Webtrees\Http\RequestHandlers\Logout;
 
 class SimpleAutoLoginModule extends AbstractModule implements ModuleCustomInterface {
     use ModuleCustomTrait;
@@ -37,6 +38,7 @@ class SimpleAutoLoginModule extends AbstractModule implements ModuleCustomInterf
     public function boot(): void
     {
     	app()->bind(LoginPage::class, SimpleAutoLoginPage::class);
+    	app()->bind(Logout::class, SimpleAutoLogout::class);
     }
 
     /**
