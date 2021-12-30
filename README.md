@@ -26,7 +26,7 @@ To manually install the module, perform the following steps:
 1. Visit the Control Panel
 1. Click "All modules"
 1. Scroll to "Simple Auto Login"
-1. Clear the checkbox for this module.
+1. Check the checkbox for this module.
 1. Scroll to the bottom.
 1. Click the "save" button.
 1. Add ``trusted_header_authenticated_user`` to the ``config.ini.php`` of webtrees
