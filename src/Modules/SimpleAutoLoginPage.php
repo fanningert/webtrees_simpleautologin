@@ -76,7 +76,7 @@ class SimpleAutoLoginPage extends LoginPage
 
 		        Auth::login($user);
 		        Log::addAuthenticationLog('Login: ' . Auth::user()->userName() . '/' . Auth::user()->realName());
-		        Auth::user()->setPreference(UserInterface::PREF_TIMESTAMP_ACTIVE, (string) Carbon::now()->unix());
+		        Auth::user()->setPreference(UserInterface::PREF_TIMESTAMP_ACTIVE, (string) time());
 		
 		        Session::put('language', Auth::user()->getPreference(UserInterface::PREF_LANGUAGE));
 		        Session::put('theme', Auth::user()->getPreference(UserInterface::PREF_THEME));
