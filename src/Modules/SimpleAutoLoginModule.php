@@ -12,6 +12,8 @@ use Fisharebest\Webtrees\Module\ModuleCustomInterface;
 use Fisharebest\Webtrees\Module\ModuleCustomTrait;
 use Fisharebest\Webtrees\Http\RequestHandlers\LoginPage;
 use Fisharebest\Webtrees\Http\RequestHandlers\Logout;
+use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Webtrees;
 
 class SimpleAutoLoginModule extends AbstractModule implements ModuleCustomInterface {
     use ModuleCustomTrait;
@@ -37,8 +39,19 @@ class SimpleAutoLoginModule extends AbstractModule implements ModuleCustomInterf
      */
     public function boot(): void
     {
-    	app()->bind(LoginPage::class, SimpleAutoLoginPage::class);
-    	app()->bind(Logout::class, SimpleAutoLogout::class);
+        $this->rebind(LoginPage::class, SimpleAutoLoginPage::class);
+        $this->rebind(Logout::class, SimpleAutoLogout::class);
+    }
+
+    private function rebind(string $base, string $custom): void
+    {
+        if (version_compare(Webtrees::VERSION, '2.2.0', '>=')) {
+            $objects = Registry::container();
+            $objects->set($base, $objects->get($custom));
+        } else {
+            $objects = app();
+            $objects->bind($base, $custom);
+        }
     }
 
     /**
@@ -78,7 +91,7 @@ class SimpleAutoLoginModule extends AbstractModule implements ModuleCustomInterf
      */
     public function customModuleVersion(): string
     {
-        return '0.0.4';
+        return '0.0.6';
     }
 
     /**
@@ -101,4 +114,3 @@ class SimpleAutoLoginModule extends AbstractModule implements ModuleCustomInterf
         return 'https://github.com/fanningert/webtrees_simpleautologin';
     }
 };
-
